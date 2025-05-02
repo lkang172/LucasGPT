@@ -4,7 +4,7 @@ from torch.nn import functional as F
 
 batch_size = 32
 block_size = 8
-max_iters = 3000
+max_iters = 500
 eval_interval = 300
 learning_rate = 1e-2
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -74,7 +74,7 @@ class BigramLanguageModel(nn.Module):
         tok_emb = self.token_embedding_table(inputs) # (Batch, Time, Channel)
         pos_emb = self.position_embedding_table(torch.arange(T, device=device))
         x = tok_emb + pos_emb
-        logits = self.lm_head(x)
+        logits = self.lmhead(x)
 
         if targets is None:
             loss = None
@@ -96,7 +96,7 @@ class BigramLanguageModel(nn.Module):
         
         return inputs
 
-model = BigramLanguageModel(vocab)
+model = BigramLanguageModel()
 m = model.to(device)
 xb, yb = get_batch("train")
 
