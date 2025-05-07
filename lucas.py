@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-batch_size = 64 
-block_size = 256
-max_iters = 5000
-eval_interval = 500
-learning_rate = 3e-4
+batch_size = 64 # number of blocks
+block_size = 256 # number of tokens per block 
+max_iters = 5000 # number of training iterations
+eval_interval = 500 # interval to evaluate model performance using val data
+learning_rate = 3e-4 # 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 eval_iters = 200
 n_embd = 384
@@ -219,4 +219,5 @@ for iter in range(max_iters):
 # generate from the model
 context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
-#open('more.txt', 'w').write(decode(m.generate(context, max_new_tokens=10000)[0].tolist()))
+
+open('more.txt', 'w').write(decode(m.generate(context, max_new_tokens=10000)[0].tolist()))
